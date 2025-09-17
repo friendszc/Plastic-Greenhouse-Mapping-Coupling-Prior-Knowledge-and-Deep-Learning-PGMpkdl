@@ -10,7 +10,7 @@ The framework addresses the labeling bottleneck and enables efficient and scalab
 # Usage Instructions
 
 1. **Download data**  
-   Download the dataset from [Zenodo](https://zenodo.org/records/17090070) and place it under the `/data` folder in the repository.
+   Download the dataset from [Zenodo](https://zenodo.org/records/17139012) and place it under the `/data` folder in the repository.
 
 2. **Construct pseudo-labels based on prior knowledge**  
    Run the following scripts in order:
