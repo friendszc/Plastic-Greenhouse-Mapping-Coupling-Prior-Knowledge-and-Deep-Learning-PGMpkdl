@@ -1,3 +1,5 @@
+import sys
+
 import torch
 import numpy as np
 import rasterio
@@ -67,12 +69,11 @@ def predict_large_image(inmodel, intif, out_tif='pred.tif',
     print(f"✅ Prediction saved to {out_tif}")
 
 
-inmodel = r"G:\train\UNet\UNet_regionABCD_lossweight30.pth"
-for region in ['A', 'B', 'C', 'D'][1:]:
-    intif = rf"G:\Data\RGB\{region}_RGB.tif"
-    outtif = rf"G:\Data\preds\{region}_pred.tif"
-    predict_large_image(
-        inmodel=inmodel,
-        intif=intif,
-        out_tif=outtif
-    )
+inmodel = sys.argv[1]
+intif = sys.argv[2]
+outtif = sys.argv[3]
+predict_large_image(
+    inmodel=inmodel,
+    intif=intif,
+    out_tif=outtif
+)

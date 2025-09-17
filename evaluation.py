@@ -1,6 +1,6 @@
 import numpy as np
 from pathlib import Path
-from DeepLearning.config import config
+from deep_learning.config import config
 import pandas as pd
 from sklearn.metrics import confusion_matrix, cohen_kappa_score
 import rasterio
@@ -66,10 +66,6 @@ def process_regions(predPath, labelPath):
             preds_region.extend(pred.flatten())
             labels_region.extend(label.flatten())
 
-        # print(np.unique(preds_region))
-        # print(np.unique(labels_region))
-        # exit(0)
-
         # 计算指标
         results[region] = calculate_metrics(np.array(preds_region), np.array(labels_region))
 
@@ -128,10 +124,10 @@ def save_results_to_csv(results_dict, output_path):
 
 
 if __name__ == "__main__":
-    # 使用示例
-    pkbPath = r"G:\Data\pkb_label_chips\test_set"
-    predPath = r"G:\train\UNet\UNet_regionABCD_lossweight30_prediction"
-    labelPath = r"G:\Data\ds_label_chips\test_set"
+    root_path = config.root_path
+    pkbPath = root_path.joinpath('data/pkb_label_chips/test_set')
+    predPath = root_path.joinpath('outputs/UNet_regionABCD_lossweight30_prediction')
+    labelPath = root_path.joinpath('data/ds_label_chips/test_set')
     regions = config.regions
 
     results_pkb_DL = process_regions(predPath, labelPath)

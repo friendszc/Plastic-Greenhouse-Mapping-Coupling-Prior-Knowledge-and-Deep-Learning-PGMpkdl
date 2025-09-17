@@ -1,17 +1,14 @@
 import os
 import glob
+import sys
 from pathlib import Path
-
 import torch
 import rasterio
 import numpy as np
 from tqdm import tqdm
 from torchvision import transforms
-
-from config import config
+from config import *
 from models.UNet import UNet
-# from models.SegNet import SegNet  # 如你有其他模型可以继续引入
-# from models.DeepLab import DeepLabV3
 
 def predict_from_inmodel(inmodel: str):
     """
@@ -48,7 +45,6 @@ def predict_from_inmodel(inmodel: str):
     os.makedirs(output_dir, exist_ok=True)
 
     # 获取测试图像
-    test_path = os.path.join(config.src_path, 'test_set')
     tif_files = glob.glob(os.path.join(test_path, '*.tif'))
     if not tif_files:
         print(f"[!] 未找到测试图像于: {config.test_path}")
@@ -81,5 +77,6 @@ def predict_from_inmodel(inmodel: str):
 
 
 if __name__ == "__main__":
-    inmodel = r"G:\train\UNet\UNet_regionABCD_lossweight30.pth"
+    inmodel = config.root_path.joinpath('outputs/UNet_regionABCD_lossweight30.pth')
+    test_path = os.path.join(config.src_path, 'test_set')
     predict_from_inmodel(inmodel)

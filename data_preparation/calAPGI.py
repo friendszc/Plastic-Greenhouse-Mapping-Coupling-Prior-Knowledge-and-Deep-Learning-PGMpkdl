@@ -39,10 +39,9 @@ def batch_process(in_path: Path, out_path: Path) -> None:
         process_single_tif(tif, out_file)
 
 if __name__ == "__main__":
-    inPath = Path(__file__).parents[1].joinpath("Data", "S2")
-    outPath = Path(__file__).parents[1].joinpath("Data", "APGI")
+    inPath = Path(__file__).parents[1].joinpath("data", "S2")
+    outPath = Path(__file__).parents[1].joinpath("data", "APGI")
 
     print(f"Input directory : {inPath}")
     print(f"Output directory: {outPath}")
-
     batch_process(inPath, outPath)

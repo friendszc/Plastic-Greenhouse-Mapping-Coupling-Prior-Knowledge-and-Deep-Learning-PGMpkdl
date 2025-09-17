@@ -1,4 +1,5 @@
 import os.path
+from pathlib import Path
 
 import torch
 
@@ -9,7 +10,8 @@ class Config:
     device = torch.device("cuda:0")
 
     # 数据参数
-    data_path = r"G:\Data"
+    root_path = Path(__file__).parents[1]
+    data_path = root_path.joinpath("data")
     src_path = os.path.join(data_path, 'RGB_chips')
     label_path = os.path.join(data_path, 'pkb_label_chips')
     batch_size = 64
@@ -34,7 +36,6 @@ class Config:
                 "B",
                 "C",
                 "D",
-                # "E",
             ]
 
 

@@ -6,6 +6,8 @@ import glob
 import os
 import shutil
 import sys
+from pathlib import Path
+
 # import cv2
 import numpy as np
 from osgeo import gdal
@@ -53,22 +55,16 @@ def tif_clip(tif, outPath, region, cliph=128, clipw=128, step=64, nodata=0, repl
     :return:
     """
 
-    # print(outPath)
     if not os.path.exists(outPath):
         os.makedirs(outPath)
-    # else:
-    #     shutil.rmtree(outPath)
-    #     os.makedirs(outPath)
 
     src = gdal.Open(tif)
     arr = src.ReadAsArray()
-    # print('输入tif形状为：', arr.shape)
     if replaceNan:
         replace_Nan(arr, nodata)
 
     Nh = (arr.shape[-2]-cliph) // step + 1
     Nw = (arr.shape[-1]-clipw) // step + 1
-    # print('Nh=%d, Nw=%d'%(Nh, Nw))
 
     global index
 
@@ -76,10 +72,7 @@ def tif_clip(tif, outPath, region, cliph=128, clipw=128, step=64, nodata=0, repl
     h = 0
     for i in range(Nh):
         w = 0
-        # print(index)
         for j in range(Nw):
-            # if h <= 500 or w+win_w >= 3000:
-            #     continue
             if len(arr.shape) == 2:
                 window_arr = arr[h:h+win_h, w:w+win_w]
             else:
@@ -95,7 +88,6 @@ def tif_clip(tif, outPath, region, cliph=128, clipw=128, step=64, nodata=0, repl
 
 
 def remove_exsisted(inPath, exts):
-    tifs = []
     for ext in exts:
         tifs = glob.glob(os.path.join(inPath, "*%s.tif"%ext))
         print(len(tifs), "files removing")
@@ -135,16 +127,10 @@ def move_files_based_on_csv(input_path, csv_file, out_path):
 def main():
 
     global index
-    regions = ["A", "B", "D", "E", "F"]
-    dataPath = r"G:\Data"
-    sub_dirs = [
-                'ds_label',
-                # 'pkb_label',
-                # 'RGB'
-                ]
 
     for sub_dir in sub_dirs:
         inPath = os.path.join(dataPath, sub_dir)
+        print(inPath)
         outPath = inPath+'_chips'
         testPath = os.path.join(outPath, "test_set")
         os.makedirs(testPath, exist_ok=True)
@@ -157,10 +143,18 @@ def main():
 
 if __name__ == '__main__':
 
+    regions = ["A", "B", "C", "D"]
+    root = Path(__file__).parents[1]
+    dataPath = root.joinpath('data')
+    csv_path = dataPath.joinpath("testSet.csv")
+    sub_dirs = [
+                'ds_label',
+                'pkb_label',
+                'RGB'
+                ]
     win_h = 128
     win_w = 128
     step = 128
     nodata = -32768
-    csv_path = r"G:\Data\testSet.csv"
 
     main()

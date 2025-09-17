@@ -144,9 +144,6 @@ def evaluate(model, data_loader, device, criterion, metrics):
     total_loss = 0
     metrics.reset()
 
-    labels_all = []
-    outputs_all = []
-
     with torch.no_grad():
         for batch in data_loader:
             inputs, labels = batch

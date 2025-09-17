@@ -11,11 +11,12 @@ from pathlib import Path
 import rasterio
 from rasterio.features import sieve
 import numpy as np
+from typing import Dict
 
 def make_labels(apgi_dir: Path,
                 mask_dir: Path,
                 label_dir: Path,
-                thresholds: dict[str, float],
+                thresholds: Dict[str, float],
                 sieve_size: int = 32,
                 connectivity: int = 8):
     """
@@ -75,7 +76,7 @@ def make_labels(apgi_dir: Path,
 
 # ---------------- main ----------------
 if __name__ == "__main__":
-    root = Path(__file__).parents[1] / "Data"
+    root = Path(__file__).parents[1] / "data"
     apgi_dir  = root / "APGI"
     mask_dir  = root / "Mask"
     label_dir = root / "pkb_label"
@@ -83,9 +84,8 @@ if __name__ == "__main__":
     thresholds = {
         "A": 0.35,
         "B": 0.25,
-        "D": 0.30,
-        "E": 0.22,
-        "F": 0.25,
+        "C": 0.30,
+        "D": 0.22,
     }
 
     make_labels(apgi_dir, mask_dir, label_dir,
